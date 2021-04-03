@@ -41,6 +41,7 @@ urlpatterns = [
     path('category2/<str:cats>/', views.FilteredAreaView, name='category2'),
     path('search/<str:cats>/', views.home_search, name='home-search'),
     path('category1/<str:cats>/<str:cat>/', views.cat_search_genre, name="cat-search-genre"),
+    path('category3/<str:cats>/', views.FilteredTypeView, name='category3'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

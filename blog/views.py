@@ -122,15 +122,25 @@ def about(request):
 def chart(request):
     return render(request, 'blog/chart.html')
 
+def image_size(img):
+    if img.height > 300 or img.width > 300:
+        img.height = 300
+        img.width = 300
+        return img
+
 @login_required
 def PostCreateView(request):
     if len(Post.objects.filter(author = request.user)) == 0:
         if request.method== 'POST':
-            form=PostForm(request.POST)
+            form=PostForm(request.POST, request.FILES)
+            print("===================================",form.is_valid())
             if form.is_valid():
                 form.instance.author = request.user
+                img = form.instance.img1 
+                print(img.height)
+
                 form.save() 
-                
+
                 messages.success(request, f'Your hospital is registered!')
                 return redirect("blog-home")
         else:
@@ -152,7 +162,7 @@ def PostDetailView(request,pk):
             rq =BedRequest()
             post = get_object_or_404(Post, pk=pk)
             rq.aadhar_number = form.cleaned_data.get('aadhar_number')
-            
+            rq.email = form.cleaned_data.get('email')
             rq.phone_number = form.cleaned_data.get('phone_number')
             rq.name = form.cleaned_data.get('name')
             rq.address = form.cleaned_data.get('address')
@@ -173,10 +183,11 @@ def PostDetailView(request,pk):
             pass
     else:
         form=BedForm()
+        post = get_object_or_404(Post, pk=pk)
         
         return render(request,'blog/post_detail.html', {
             "form": form,
-            "post": get_object_or_404(Post, pk=pk),
+            "post": post,
         })
 
 # class PatientDetailView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -191,12 +202,13 @@ def PatientDetailView(request, pk):
             ch = form.cleaned_data.get('choice')
             if ch != 3:
                 post = Post.objects.filter(author = request.user).first()
-                if ch == 1:
+                if ch == '1':
                     post.covid_cap -= 1
                 else:
                     post.norm_cap -= 1
                 post.save()
                 rq = BedRequest.objects.filter(pk = pk).first()
+                
                 send_mail('COVID Saathi has some good news for you!',f' {request.user} has accepted your booking!',settings.EMAIL_HOST_USER,[f'{rq.email}'],fail_silently=False)
                 BedRequest.objects.filter(aadhar_number = rq.aadhar_number).delete()
             else:
@@ -204,16 +216,19 @@ def PatientDetailView(request, pk):
         return redirect('dash-view')  
     else:
         form =Booking()
-        
+        rq = get_object_or_404(BedRequest, pk=pk)
+        print("=========================================",rq.email)
+        print("=========================================",rq.phone_number)
         return render(request,'blog/patient_detail.html', {
             "form": form,
-            "post": get_object_or_404(BedRequest, pk=pk),
+            "post": rq,
         })
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
+
     fields = ['name', 'content', 'covid_cap', 'norm_cap', 'city',
-                'address'
+                'address', 'img1', 'img2', 'img3'
             ]
 
     def form_valid(self, form):
@@ -314,6 +329,30 @@ def FilteredCityView(request, cats):
 
 def FilteredAreaView(request, cats):
     category_posts = Post.objects.filter(area=cats)
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cats = form.cleaned_data.get('search')
+            return redirect("home-search", cats)
+    else:
+        form = Search()
+    paginator = Paginator(category_posts, 10)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+    context={
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
+    }
+    return render(request, 'blog/home.html', context)
+
+def FilteredTypeView(request, cats):
+    category_posts = Post.objects.filter(type=cats)
     if request.method== 'POST':
         form = Search(request.POST)
         if form.is_valid():

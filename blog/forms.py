@@ -9,35 +9,27 @@ CITY = [('Mumbai', 'Mumbai'), ('Pune', 'Pune'), ('Nagpur', 'Nagpur'), ('Delhi', 
 BOOKING = [(1, 'Allow Covid Bed Registration'),(2, 'Allow Bed Registration'), (3, 'Delete Entry')]
 SCHEME = [('Life Insurance', 'Life Insurance'), ('Govt. Scheme','Govt. Scheme'), ('MSME Loan','MSME Loan')]
 AREA =[('Andheri','Andheri'),('Worli','Worli'),('Bandra','Bandra'),('Breach Candy','Breach Candy'),('Thane','Thane'),('Ghatkopar','Ghatkopar'),('Friends Colony','Friends Colony'),('Hinjawadi','Hinjwadi'),('Chandini Chowk','Chandani Chowk')]
-# class PostForm(forms.ModelForm):
-#     class Meta:
-#         model = Post
-#         fields = ('name', 'content','weight', "pregnant", "anemia", "infectious_diseases", "doctors_prescription",
-#             "days", "test", "covid"
-#         )
-#         widgets = {
+TYPE = [('Dedicated covid hospital', 'Dedicated covid hospital'), ('Dedicated covid health center','Dedicated covid health center'), ('Covid care center','Covid care center')]
 
-#             'name' : forms.TextInput(attrs={'class':'form-control'}),
-#             # 'category': forms.Select(choices=choice_list,attrs={'class':'form-control'}),
-#             'content': forms.Textarea(attrs={'class':'form-control'}),
-#             'covid_cap' : forms.Select(choices=ANEMIA, attrs={'class':'form-control'}),
-#             'norm_cap': forms.Select(choices=ANEMIA,attrs={'class':'form-control'}),
-        
-#         }
 
 class PostForm(forms.ModelForm):
     name =forms.CharField()
     content=forms.Textarea()
+    type = forms.CharField(widget=forms.Select(choices=TYPE))
+    
+    proof=forms.ImageField(label="Address Proof")
     covid_cap=forms.IntegerField(label='Number of covid beds?')
-    norm_cap = forms.IntegerField(label='Number of covid beds?')
+    norm_cap = forms.IntegerField(label='Number of normal beds?')
     city = forms.CharField(widget=forms.Select(choices=CITY))
     area = forms.CharField(widget=forms.Select(choices=AREA))
     address = forms.Textarea()
-
+    img1 = forms.ImageField(required=False)
+    img2 = forms.ImageField(required=False)
+    img3 = forms.ImageField(required=False)
     class Meta:
-        model = Post 
-        fields = ['name', 'content', 'covid_cap', 'norm_cap', 'city', 'area',
-                   'address'
+        model = Post
+        fields = ['name', 'content', 'type', 'proof', 'covid_cap', 'norm_cap', 'city', 'area',
+                   'address', 'img1', 'img2', 'img3'
                  ]
 
 class BedForm(forms.ModelForm):
