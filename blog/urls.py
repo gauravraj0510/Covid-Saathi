@@ -35,7 +35,7 @@ urlpatterns = [
     path('post/<int:pk>/', views.PostDetailView, name='post-detail'),
     path('patient/<int:pk>/', views.PatientDetailView, name='patient-detail'),
     path('post/<int:pk>/update', PostUpdateView.as_view(), name='post-update'),
-  
+    path('global_news/', views.Global, name="global-news"),
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('dashboard/', views.FilteredPatientView, name='dash-view'),
     path('chart/', views.bed_chart, name='bed-chart'),

@@ -34,9 +34,9 @@
                 <i class='bx bx-menu' id="header-toggle"></i>
             </div>
 
-            <div class="header__img">
+            <!-- <div class="header__img">
                 <img src="../../static/blog/images/perfil.jpg" alt="">
-            </div>
+            </div> -->
         </header>
 
         <div class="l-navbar" id="nav-bar">
@@ -49,9 +49,17 @@
         
                   <div class="nav__list">
                     
-                    <a href="{% url 'blog-home' %}" class="nav__link active">
+                    <a href="{% url 'blog-home' %}" class="nav__link ">
                       <i class="bx bx-user nav__icon"></i>
                       <span class="nav__name">All Listings</span>
+                    </a>
+                    <a href="{% url 'blog-news' %}" class="nav__link ">
+                      <i class="bx bx-news nav__icon"></i>
+                      <span class="nav__name">Local News</span>
+                    </a>
+                    <a href="{% url 'global-news' %}" class="nav__link ">
+                      <i class="bx bxs-news nav__icon"></i>
+                      <span class="nav__name">Global News</span>
                     </a>
                     {% if user.is_authenticated %}
         

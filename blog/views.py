@@ -450,9 +450,35 @@ def news(request):
     context={
         # 'body':body,
         # 'headline':headline
-        'data':data
+        'data':data,
+        'type':'Local'
     }
    
 
     return render(request,'blog/about.html',context)
 
+
+
+def Global(request):
+    source3= requests.get('https://edition.cnn.com/world/live-news/coronavirus-pandemic-vaccine-updates-04-03-21/index.html?tab=all').text
+    soup= BeautifulSoup(source3,'lxml')
+    headline=[]
+    body=[]
+    # headline= soup.find('div',class_='arti-right').text
+    for article in soup.find_all('h2'):
+        # print(article.text)
+        headline.append(article.text)
+    for article in soup.find_all('div',class_='erzhuK'):
+        print(article.text)
+        body.append(article.text)
+    # content =soup.find_all('p')
+
+    data=zip(headline,body)
+    # print(data)
+    context={
+        # 'body':body,
+        # 'headline':headline
+        'data':data,
+        'type':'Global'
+    }
+    return render(request,'blog/about.html',context)
