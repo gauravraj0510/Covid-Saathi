@@ -57,52 +57,21 @@
 
 <div class="row">
 
-
-    <!-- <div class="col-md-4">
-        <div>
-          <h3 style="text-align: center;">Filters Available</h3>
-          <p class="text-muted">
-            Choose the option which is most suitable for you
-          </p>
-          <div class="dropclassall">
-          <div class="dropdown navElements">
-            <button class="dropbtn">City</button>
-            <div class="dropdown-content">
-              <a href="/category1/Mumbai/">Mumbai</a>
-              <a href="/category1/Pune/">Pune</a>
-              <a href="/category1/Nagpur/">Nagpur</a>
-              <a href="/category1/Delhi/">Delhi</a>
-              <a href="/category1/Noida/">Noida</a>
-              <a href="/category1/Chandigarh/">Chandigarh</a>
-              <a href="/category1/Amritsar/">Amritsar</a>
-            </div>
-          </div>
-          <div  class="dropdown navElements">
-            <button class="dropbtn">Area</button>
-            <div class="dropdown-content">
-              <a href="/category2/Andheri/">Andheri</a>
-              <a href="/category2/Worli/">Worli</a>
-              <a href="/category2/Bandra/">Bandra</a>
-              <a href="/category2/Breach_Candy/">Breach Candy</a>
-              <a href="/category2/Thane/">Thane</a>
-              <a href="/category2/Ghatkopar/">Ghatkopar</a>
-              <a href="/category2/Friends_Colony/">Friends Colony</a>
-              <a href="/category2/Hinjawadi/">Hinjawadi</a>
-              <a href="/category2/Chandani_Chowk/">Chandani Chowk'</a>
-            </div>
-            
-          </div>
-          <div  class="dropdown navElements">
-              <button class="dropbtn">Hospital Type</button>
-              <div class="dropdown-content">
-                <a href="/category3/Dedicated%20covid%20hospital/">Dedicated covid hospital</a>
-                <a href="/category3/Dedicated%20covid%20health%20center/">Dedicated covid health center</a>
-                <a href="/category3/Covid%20care%20center/">Covid care center</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
+  <style>
+    .book_btn{
+      background-image: linear-gradient(65deg, #FF4D79 0, #FF809F 100%);
+      padding: 10px 20px;
+      border-radius: 15px;
+      margin-top: 10px;
+      color: #fff;
+      transition: background-image 1s;
+    }
+    .book_btn:hover{
+      background-color: rgb(85, 85, 219);
+      background-image: linear-gradient(65deg, rgb(8, 8, 243) 0, rgb(85, 85, 219) 100%);
+      color: #fff;
+    }
+  </style>
 
   {% for post in post_list %}
 
@@ -115,16 +84,19 @@
       </div>
       <div class="descr">
         <div class="icon">
-          <p class="bed_count">{{ post.covid_cap }}</p>
+          <p style="font-size: 20px; font-weight: 700;" class="bed_count">{{ post.covid_cap }}</p>
         </div>
         <h3 class="title">
           <a href="{% url 'post-detail' post.id %}"> {{ post.name }} </a>
         </h3>
-        <a href="{% url 'post-detail' post.id %}" class="main-button">Book a Bed</a>
+        <a class="book_btn" href="{% url 'post-detail' post.id %}" class="main-button">Book a Bed</a>
+        
       </div>
     </div>
   </div>
   {% endfor %}
+
+  <button onclick="location.href = '/chart';" src="{% url 'blog-chart' %}" style="width: 70%; margin-left: 15%; margin-right: 15%; margin-bottom: 20px; padding-left: 0; padding-right: 0;" class="btn">View Bed Availability Charts</button>
 
   
 </div>
@@ -132,5 +104,6 @@
 
 <!-- <iframe style="width: 1000px; height: 500px;" src="https://maps.mapmyindia.com/corona" ></iframe> -->
 <!-- <img src="./media/barchart.png" /> -->
+
 
 {% endblock content %}

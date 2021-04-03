@@ -1,6 +1,51 @@
 {% extends "blog/navbase_without.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
+<style>
+
+form {
+    width: 60%;
+    margin-left: 20%;
+    background-color: rgb(177, 177, 248);
+    padding: 15px;
+    box-shadow: 10px 10px 8px #888888;
+    border-radius: 20px;
+}
+button.btn.btn-outline-info {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background: rgb(85, 85, 219);
+    width: 30%;
+    color: #fff;
+    margin-left: 35%;
+}
+button.btn.btn-outline-info:hover {
+    background: rgb(255, 204, 95);
+    color: #000;
+
+}
+.border-top.pt-3 {
+    width: 60%;
+    margin-left: 20%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 50px !important;
+}
+legend.border-bottom.mb-4{
+    color: #000;
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+}
+li, small#hint_id_username, small#hint_id_password2{
+    color: #000 !important;
+}
+label.requiredField {
+    font-weight: 700;
+}
+</style>
+
     <div class="content-section">
         <form action="" method="POST">
             {% csrf_token %}

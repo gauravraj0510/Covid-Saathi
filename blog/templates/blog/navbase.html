@@ -9,6 +9,18 @@
       src="//www.buildquickbots.com/botwidget/v3/demo/static/js/sdk.js?v=3"
       key="2de8d293-c16d-42e5-ab6e-28caf5b424e7"
     ></script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );
+      }
+    </script>
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -121,14 +133,20 @@
         line-height: 20px;
       }
       button.dropbtn {
-    border-radius: 8px;
-    height: 40px;
-    font-size: medium;
-    line-height: 100%;
-    padding: 0;
-    padding-left: 10px;
-    padding-right: 10px;
-}
+        border-radius: 8px;
+        height: 40px;
+        font-size: medium;
+        line-height: 100%;
+        padding: 0;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      select.goog-te-combo {
+        font-size: medium importa !important;
+        padding: 5px !important;
+        border: 2px solid blue !important;
+        border-radius: 50px !important;
+      }
     </style>
   </head>
   <body id="body-pd">
@@ -136,6 +154,7 @@
       <div class="header__toggle">
         <i class="bx bx-menu" id="header-toggle"></i>
       </div>
+      <div align="padding-left" id="google_translate_element"></div>
       <!-- <div class="header__img">
         <img src="../../static/blog/images/perfil.jpg" alt="" />
       </div> -->
@@ -145,22 +164,26 @@
       <nav class="nav">
         <div>
           <a href="/" class="nav__logo">
-            <i class="bx bx-layer nav__logo-icon"></i>
+            <i class='bx bx-world nav__logo-icon'></i>
             <span class="nav__logo-name">COVID Saathi</span>
           </a>
 
           <div class="nav__list">
-            <a href="{% url 'blog-home' %}" class="nav__link ">
-              <i class="bx bx-user nav__icon"></i>
+            <a href="{% url 'blog-home' %}" class="nav__link">
+              <i class='bx bx-list-ul nav__icon'></i>
               <span class="nav__name">All Listings</span>
             </a>
-            <a href="{% url 'blog-news' %}" class="nav__link ">
+            <a href="{% url 'blog-news' %}" class="nav__link">
               <i class="bx bx-news nav__icon"></i>
               <span class="nav__name">Local News</span>
             </a>
-            <a href="{% url 'global-news' %}" class="nav__link ">
+            <a href="{% url 'global-news' %}" class="nav__link">
               <i class="bx bxs-news nav__icon"></i>
               <span class="nav__name">Global News</span>
+            </a>
+            <a href="{% url 'blog-chart' %}" class="nav__link">
+              <i class="bx bx-bar-chart nav__icon"></i>
+              <span class="nav__name">Bed Availability Charts</span>
             </a>
             {% if user.is_authenticated %}
 
@@ -170,7 +193,7 @@
             </a>
 
             <a href="{% url 'post-create' %}" class="nav__link">
-              <i class="bx bx-message-square-detail nav__icon"></i>
+              <i class="bx bxs-home-circle nav__icon"></i>
               <span class="nav__name">Hospital Profile</span>
             </a>
 
@@ -208,11 +231,15 @@
       </nav>
     </div>
     {% if search_form %}
-    <div class="content-section make_grey" style="margin-top: 20px;">
+    <div class="content-section make_grey" style="margin-top: 20px">
       <form method="POST">
         {% csrf_token %}
         <fieldset class="form-group">
-          <div id="div_id_search" style="display: flex; flex-direction: row;" class="form-group">
+          <div
+            id="div_id_search"
+            style="display: flex; flex-direction: row"
+            class="form-group"
+          >
             <label for="id_search" class="requiredField"> </label>
             <div class="col-lg-10">
               <input
@@ -224,19 +251,29 @@
               />
             </div>
             <div class="form-group col-lg-2">
-              <button style="width: 70%; margin-left: 15%; margin-right: 15%; padding-left: 0; padding-right: 0;" class="btn" type="submit">Search</button>
+              <button
+                style="
+                  width: 70%;
+                  margin-left: 15%;
+                  margin-right: 15%;
+                  padding-left: 0;
+                  padding-right: 0;
+                "
+                class="btn"
+                type="submit"
+              >
+                Search
+              </button>
             </div>
           </div>
         </fieldset>
-
-        
       </form>
-  </div>
+    </div>
     {% endif %}
 
     <div>
-      <div style="margin-bottom: 10px;" class="dropclassall col-md-12">
-        <h3 style="text-align: center; font-size: 20px; padding-top: 9px;">
+      <div style="margin-bottom: 10px" class="dropclassall col-md-12">
+        <h3 style="text-align: center; font-size: 20px; padding-top: 9px">
           Filter your hospital
         </h3>
 
