@@ -1,0 +1,20 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    
+<div class="col-md-12" style="display: grid; grid-template-columns: auto auto;"  class="container">
+    {% for post in posts %}
+        <div class=" item service-item">
+            <div class="icon">
+                <h1 style="font-weight: 700; padding-top: 15px;">{{ post.covid_cap }}</h1>
+                <p style="font-weight: 700; color: #000;">Beds</p>
+            </div>
+            <h5 class="service-title"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.name }}</a></h5>
+            <!-- <p>{{ post.content }}</p> -->
+            <a href="{% url 'post-detail' post.id %}" class="main-button">Book a Bed</a>
+        </div>
+    {% endfor %}
+</div>
+<!-- <iframe style="width: 1000px; height: 500px;" src="https://maps.mapmyindia.com/corona" ></iframe> -->
+<img src="./media/barchart.png" />
+    
+{% endblock content %}

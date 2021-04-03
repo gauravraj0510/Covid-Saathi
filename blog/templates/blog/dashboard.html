@@ -1,0 +1,55 @@
+{% extends 'blog/base.html' %} {% block content %}
+<style>
+  body {
+    background-color: rgba(255, 255, 255, 0.884);
+  }
+  th,
+  td {
+    background-color: whitesmoke;
+  }
+  h1 {
+    text-shadow: -3px -3px 6px #00000060;
+    font-weight: 600;
+  }
+</style>
+<div class="row d-flex justify-content-center">
+  <div class="col-9">
+    <h1 class="my-4" style="text-align: center">My Dashboard</h1>
+    {% if user.is_authenticated == True %}
+    <legend class="border-bottom mb-4">Donations I have donated</legend>
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Beds available</th>
+            <th scope="col">C- beds Available</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for post in posts%}
+        <td>{{ post.norm_cap}}</td>
+        <td>{{ post.covid_cap }}</td>
+
+        {% endfor %}
+      </tbody>
+    </table>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Patient Symptoms</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for rq in requests %}
+        <tr>
+          <th scope="row"><a href="{% url 'patient-detail' rq.id %}">{{ rq.name }}</a></th> 
+          <td>{{ rq.symptoms }}</td>
+        </tr>
+        {% endfor %} 
+        </tbody>
+    </table>
+    
+    {% endif %}
+  </div>
+</div>
+{% endblock content%}

@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<style>
+    h1{
+    text-shadow: -3px -3px 6px #00000060;
+    font-weight: 600;
+    }
+</style>
+<h1 class='my-4' style="text-align: center;">Desired Hospitals</h1>
+    {% if posts %}
+<div class="col-md-12" style="display: grid; grid-template-columns: auto auto;"  class="container">
+
+        {% for post in posts reversed %}
+            <!-- <article class="media content-section">
+                <div class="media-body">
+                    <div class="article-metadata">
+                    <a class="mr-2" href="{% url 'blog-home'  %}">{{ post.author }}</a>
+                    <a class="mr-2" href="{% url 'blog-home'  %}">- {{ post.covid_cap }}</a>
+                    <a class="mr-2" href="{% url 'blog-home'  %}">- {{ post.norm_cap }}</a>
+                    
+                </div>
+            </article> -->
+            <div class=" item service-item">
+                <div class="icon">
+                    <h1 style="font-weight: 700; padding-top: 15px;">{{ post.covid_cap }}</h1>
+                    <p style="font-weight: 700; color: #000;">Beds</p>
+                </div>
+                <h5 class="service-title"><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.name }}</a></h5>
+                <!-- <p>{{ post.content }}</p> -->
+                <a href="{% url 'post-detail' post.id %}" class="main-button">Book a Bed</a>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <h2>No recommendations, please check Hospital list</h2>
+    {% endif %}
+{% endblock content%}
