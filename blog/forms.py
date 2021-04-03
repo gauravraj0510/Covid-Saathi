@@ -79,3 +79,9 @@ class Booking(forms.ModelForm):
         model= Post
         fields = ["choice"]
 
+class Search(forms.ModelForm):
+    search=forms.CharField()
+    class Meta:
+        model= Post
+        fields = ["search"]
+

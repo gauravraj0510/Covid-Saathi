@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 <style>
     h1{
@@ -6,6 +7,21 @@
     font-weight: 600;
     }
 </style>
+{% if search_form %}
+    <div class="content-section make_grey">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4"></legend>
+                {{search_form|crispy}}
+            </fieldset>
+            
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+{% endif %}
 <h1 class='my-4' style="text-align: center;">Desired Hospitals</h1>
     {% if posts %}
 <div class="col-md-12" style="display: grid; grid-template-columns: auto auto;"  class="container">
@@ -32,6 +48,6 @@
         {% endfor %}
         </div>
     {% else %}
-        <h2>No recommendations, please check Hospital list</h2>
+        <h2>No Hospitals available in this category yet</h2>
     {% endif %}
 {% endblock content%}

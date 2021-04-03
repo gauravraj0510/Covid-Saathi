@@ -16,18 +16,18 @@
 
         <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
-        <script
+        <!-- <script
         type="text/javascript"
         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-      ></script>
-      <script type="text/javascript">
+      ></script> -->
+      <!-- <script type="text/javascript">
         function googleTranslateElementInit() {
           new google.translate.TranslateElement(
             { pageLanguage: "en" },
             "google_translate_element"
           );
         }
-      </script>
+      </script> -->
             
         <title>Covid Saathi</title>
     </head>
@@ -252,6 +252,18 @@ line-height: 20px;
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
         {% block jquery %}{% endblock %}
+
+        {% if post_list.has_other_pages %}
+          <nav aria-label="Page navigation conatiner"></nav>
+          <ul class="pagination justify-content-center">
+            {% if post_list.has_previous %}
+            <li><a href="?page={{ post_list.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+            {% endif %}
+            {% if post_list.has_next %}
+            <li><a href="?page={{ post_list.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+            {% endif %}
+          </ul>>
+        {% endif %}
     
       </body>
 </html>

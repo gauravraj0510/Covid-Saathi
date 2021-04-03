@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.views import APIView
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .forms import PostForm, BedForm, Booking
+from .forms import PostForm, BedForm, Booking, Search
 from django.core.mail import send_mail
 from django.contrib import messages
 from .models import Post, BedRequest
@@ -16,6 +16,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from django.conf import settings
 from django.core.mail import send_mail
+from collections import Counter
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 
 def mainHome(request):
     # objects = []
@@ -32,13 +35,85 @@ def mainHome(request):
     # plt.savefig('media/barchart.png')
     return render(request, 'blog/index.html',)
 
-def home(request):
+
+def search(posts, name):
+    strings = name.lower().split()
+    category_posts = []
+    for post in posts:
+        for string in strings:
+            data = post.name+" "+ post.city + " "+ post.area
+            if string in data.lower().split():
+                category_posts.append(post)
     
-    posts  = Post.objects.all().order_by("-covid_cap")
+    result = [item for items, c in Counter(category_posts).most_common()
+                                          for item in [items] * c]
+    res = []
+    for item in result:
+        flag = True
+        for r in res:
+            if item.name == r.name:
+                flag = False
+                break
+        if flag:
+            res.append(item)
+    return res
+
+def home(request):
+    posts = Post.objects.all().order_by("-covid_cap")
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cats = form.cleaned_data.get('search')
+            return redirect("home-search", cats)
+    form = Search()
+    paginator = Paginator(posts, 8)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
     context={
-        'posts': Post.objects.all().order_by("-covid_cap")
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
     }
     return render(request, 'blog/home.html', context)
+
+def home_search(request, cats):
+    posts = Post.objects.all().order_by("-covid_cap")
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cats = form.cleaned_data.get('search')
+            return redirect("home-search", cats)
+    else:
+        form = Search()
+    posts  = search(posts, cats)
+    paginator = Paginator(posts, 10)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+    context={
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
+    }
+    return render(request, 'blog/home.html', context)
+
+
+# def home(request):
+    
+#     posts  = Post.objects.all().order_by("-covid_cap")
+#     context={
+#         'posts': Post.objects.all().order_by("-covid_cap")
+#     }
+#     return render(request, 'blog/home.html', context)
 
 def about(request):
     return render(request, 'blog/about.html')
@@ -209,22 +284,75 @@ def bed_chart(request):
     })
 
 def FilteredCityView(request, cats):
-    category_posts = []
-    # users = Post.objects.filter(city=cats)
-    posts = Post.objects.filter(city=cats)
-    # for post in posts:
-    #    if post.author.profile.blood_group == cats:
-    #        category_posts.append(post)
-
-    return render(request, 'blog/categories.html', {'cats': cats, 'posts': posts})
+    category_posts = Post.objects.filter(city=cats)
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cats = form.cleaned_data.get('search')
+            return redirect("home-search", cats)
+    else:
+        form = Search()
+    paginator = Paginator(category_posts, 10)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+    context={
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
+    }
+    return render(request, 'blog/home.html', context)
 
 
 def FilteredAreaView(request, cats):
-    category_posts = []
-    # users = Post.objects.filter(city=cats)
-    posts = Post.objects.filter(area=cats)
-    # for post in posts:
-    #    if post.author.profile.blood_group == cats:
-    #        category_posts.append(post)
+    category_posts = Post.objects.filter(area=cats)
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cats = form.cleaned_data.get('search')
+            return redirect("home-search", cats)
+    else:
+        form = Search()
+    paginator = Paginator(category_posts, 10)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+    context={
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
+    }
+    return render(request, 'blog/home.html', context)
 
-    return render(request, 'blog/categories.html', {'cats': cats, 'posts': posts})
+def cat_search_genre(request, cats, cat):
+    category_posts = Post.objects.filter(city=cats)
+    if request.method== 'POST':
+        form = Search(request.POST)
+        if form.is_valid():
+            cat = form.cleaned_data.get('search')
+            return redirect("cat-search-genre", cats, cat)
+    else:
+        form = Search()
+    category_posts  = search(category_posts, cat)
+    paginator = Paginator(category_posts, 10)
+    page = request.GET.get('page')
+    try:
+        post_list = paginator.page(page)
+    except PageNotAnInteger:
+        post_list = paginator.page(1)
+    except EmptyPage:
+        post_list = paginator.page(paginator.num_pages)
+    context={
+        'page': page,
+        'post_list': post_list,
+        'search_form': form,
+    }
+    return render(request, 'blog/home.html', context)
