@@ -118,6 +118,8 @@ def home_search(request, cats):
 def about(request):
     return render(request, 'blog/about.html')
 
+def data(request):
+    return render(request, 'blog/data.html')
 
 def chart(request):
     return render(request, 'blog/chart.html')
@@ -227,7 +229,7 @@ def PatientDetailView(request, pk):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
 
-    fields = ['name', 'content', 'covid_cap', 'norm_cap', 'city',
+    fields = ['name', 'content', 'proof','covid_cap', 'norm_cap', 'city',
                 'address', 'img1', 'img2', 'img3'
             ]
 

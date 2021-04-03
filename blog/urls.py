@@ -28,6 +28,7 @@ urlpatterns = [
     path('all', views.home, name="blog-home"),
     path('', views.mainHome, name="main-home"),
     path('about/', views.about, name="blog-about"),
+    path('data/', views.data, name="blog-data"),
     path('chart1/', views.chart, name="blog-chart"),
     path('post/new/', views.PostCreateView, name='post-create'),
     path('post/<int:pk>/', views.PostDetailView, name='post-detail'),
