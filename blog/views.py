@@ -118,6 +118,10 @@ def home_search(request, cats):
 def about(request):
     return render(request, 'blog/about.html')
 
+
+def chart(request):
+    return render(request, 'blog/chart.html')
+
 @login_required
 def PostCreateView(request):
     if len(Post.objects.filter(author = request.user)) == 0:
@@ -356,3 +360,23 @@ def cat_search_genre(request, cats, cat):
         'search_form': form,
     }
     return render(request, 'blog/home.html', context)
+
+class ChartData(APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+        qs=Post.objects.all()
+        
+        labels = []
+        default_items = []
+
+        for item in qs:
+            labels.append(item.name)
+            default_items.append(item.covid_cap+item.norm_cap)
+
+        data = {
+                "labels": labels,
+                "default": default_items,
+        }
+        return Response(data)

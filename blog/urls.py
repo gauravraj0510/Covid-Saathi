@@ -21,13 +21,14 @@ from django.conf import settings
 from users import views as user_views
 from django.contrib.auth import views as auth_views
 from .views import (
-                    PostUpdateView, PostDeleteView, bed_chart
+                    PostUpdateView, PostDeleteView, bed_chart , ChartData,
 )
 
 urlpatterns = [
     path('all', views.home, name="blog-home"),
     path('', views.mainHome, name="main-home"),
     path('about/', views.about, name="blog-about"),
+    path('chart1/', views.chart, name="blog-chart"),
     path('post/new/', views.PostCreateView, name='post-create'),
     path('post/<int:pk>/', views.PostDetailView, name='post-detail'),
     path('patient/<int:pk>/', views.PatientDetailView, name='patient-detail'),
@@ -35,11 +36,11 @@ urlpatterns = [
     path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
     path('dashboard/', views.FilteredPatientView, name='dash-view'),
     path('chart/', views.bed_chart, name='bed-chart'),
+    path('api/chart/', ChartData.as_view(), name='bed-chart1'),
     path('category1/<str:cats>/', views.FilteredCityView, name='category1'),
     path('category2/<str:cats>/', views.FilteredAreaView, name='category2'),
     path('search/<str:cats>/', views.home_search, name='home-search'),
     path('category1/<str:cats>/<str:cat>/', views.cat_search_genre, name="cat-search-genre"),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
