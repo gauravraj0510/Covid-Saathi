@@ -1,4 +1,4 @@
-{% extends "blog/base_without.html" %} {% block jquery%}
+{% extends "blog/navbase_without.html" %} {% block jquery%}
 <script>
   var endpoint = "/api/chart/";
   var defaultData = [];
@@ -17,7 +17,7 @@
           labels: labels,
           datasets: [
             {
-              label: "# of Votes",
+              label: "# of Beds",
               data: defaultData,
               backgroundColor: [
                 "rgba(255, 99, 132, 0.2)",
@@ -62,4 +62,4 @@
 </script>
 
 {% endblock %} {% block content %}
-<canvas id="myChart" width="400" height="200"></canvas> {% endblock %}
+<canvas id="myChart"></canvas> {% endblock %}
