@@ -1,58 +1,59 @@
-{% extends 'blog/navbase.html' %}
-{% load crispy_forms_tags %}
-{% block content %}
+{% extends 'blog/navbase_without.html' %} {% load crispy_forms_tags %} {% block content %}
 <style>
-    button.btn.btn-outline-info {
-      background-color: rgb(63, 171, 243);
-      font-weight: 600;
-      transition: 0.5s;
+  button.btn.btn-outline-info {
+    background-color: rgb(63, 171, 243);
+    font-weight: 600;
+    transition: 0.5s;
   }
   button.btn.btn-outline-info:hover {
-      background-color: rgb(255, 204, 95);
-      color: black;
+    background-color: rgb(255, 204, 95);
+    color: black;
   }
-  </style>
-    <article class="media content-section">
-        <img  src="{{ post.author.profile.image.url }}">
-        <div class="media-body">
-            <div class="article-metadata">
-            <a class="mr-2" href="#">{{ post.author }}</a>
-            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-            {% if post.author == user %}
-                <div>
-                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">Update</a>
-                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">Delete</a>
-                </div>
-            {% endif %}
-            </div>
-            <h2 class="article-title">{{ post.name }}</h2>
-            <!-- <h4>Donor's Info</h4> -->
-            <p class="article-content">{{ post.content }}</p>
-            
-                <img  src="{{ post.img1.url }}" style="width: 200px; height: 200px;" >
-                <img  src="{{ post.img2.url }}" style="width: 200px; height: 200px;" >
-                <img  src="{{ post.img3.url }}" style="width: 200px; height: 200px;" >
+</style>
+<article class="media content-section">
+  <img src="{{ post.author.profile.image.url }}" />
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ post.author }}</a>
+      <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
+      {% if post.author == user %}
+      <div>
+        <a
+          class="btn btn-secondary btn-sm mt-1 mb-1"
+          href="{% url 'post-update' post.id %}"
+          >Update</a
+        >
+        <a
+          class="btn btn-danger btn-sm mt-1 mb-1"
+          href="{% url 'post-delete' post.id %}"
+          >Delete</a
+        >
+      </div>
+      {% endif %}
+    </div>
+    <h2 class="article-title">{{ post.name }}</h2>
+    <!-- <h4>Donor's Info</h4> -->
+    <p class="article-content">{{ post.content }}</p>
 
-                <p class="article-content">Type: {{ post.type }}</p>
-                <p class="article-content">Covid Beds: {{ post.covid_cap }}</p>
-                <p class="article-content">Normal Beds: {{ post.norm_cap }}</p>
-                <p class="article-content">Area: {{ post.area }}</p>
-                <p class="article-content">City: {{ post.city }}</p>
-                
+    <img src="{{ post.img1.url }}" style="width: 200px; height: 200px" />
+    <img src="{{ post.img2.url }}" style="width: 200px; height: 200px" />
+    <img src="{{ post.img3.url }}" style="width: 200px; height: 200px" />
 
-            
-                {%if not user.is_authenticated %}
-            <form method="POST">
-                {% csrf_token %}
-                <fieldset class="form-group">
-                    {{ form|crispy }}
-                </fieldset>
-                <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Book a Bed</button>
-                </div>
-            </form>
-            {% endif %}
-        </div> 
-        
-    </article>
-{% endblock content%}
+    <p class="article-content">Type: {{ post.type }}</p>
+    <p class="article-content">Covid Beds: {{ post.covid_cap }}</p>
+    <p class="article-content">Normal Beds: {{ post.norm_cap }}</p>
+    <p class="article-content">Area: {{ post.area }}</p>
+    <p class="article-content">City: {{ post.city }}</p>
+
+    {%if not user.is_authenticated %}
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">{{ form|crispy }}</fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Book a Bed</button>
+      </div>
+    </form>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

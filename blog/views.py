@@ -18,6 +18,10 @@ from django.conf import settings
 from django.core.mail import send_mail
 from collections import Counter
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from bs4 import BeautifulSoup
+import requests
+import feedparser
+from pprint import pprint
 
 
 def mainHome(request):
@@ -116,6 +120,7 @@ def home_search(request, cats):
 #     return render(request, 'blog/home.html', context)
 
 def about(request):
+    
     return render(request, 'blog/about.html')
 
 def data(request):
@@ -132,10 +137,11 @@ def image_size(img):
 
 @login_required
 def PostCreateView(request):
-    if len(Post.objects.filter(author = request.user)) == 0:
+    post=Post.objects.filter(author = request.user)
+    if len(post) == 0:
         if request.method== 'POST':
             form=PostForm(request.POST, request.FILES)
-            print("===================================",form.is_valid())
+            # print("===================================",form.is_valid())
             if form.is_valid():
                 form.instance.author = request.user
                 img = form.instance.img1 
@@ -152,8 +158,8 @@ def PostCreateView(request):
             }
             return render(request,'blog/post_form.html',context)
     else:
-        messages.warning(request, f"You already have entered your hospital")
-        return redirect("blog-home")
+        post=post.first()
+        return redirect("post-detail",pk=post.id)
 
 # @login_required
 def PostDetailView(request,pk):
@@ -421,3 +427,32 @@ class ChartData(APIView):
                 "default": default_items,
         }
         return Response(data)
+
+def news(request):
+    source =  requests.get('https://www.cnbctv18.com/healthcare/coronavirus-news-live-updates-india-mumbai-maharashtra-kerala-covid19-vaccine-lockdown-news-3-2-3-8804661.htm').text
+    source2= requests.get('https://timesofindia.indiatimes.com/india/coronavirus-live-updates-april-3/liveblog/81302719.cms').text
+    source3= requests.get('https://indianexpress.com/article/india/coronavirus-india-live-updates-second-wave-maharashtra-lockdown-covid-19-7256745/').text
+    soup= BeautifulSoup(source3,'lxml')
+    headline=[]
+    body=[]
+    # headline= soup.find('div',class_='arti-right').text
+    for article in soup.find_all('div',class_='heading-lvblg'):
+        # print(article.text)
+        headline.append(article.text)
+
+    for article in soup.find_all('div',class_='body-lvblg'):
+        # print(article.text)
+        body.append(article.text)
+    # content =soup.find_all('p')
+
+    data=zip(headline,body)
+    # print(data)
+    context={
+        # 'body':body,
+        # 'headline':headline
+        'data':data
+    }
+   
+
+    return render(request,'blog/about.html',context)
+
