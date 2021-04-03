@@ -1,4 +1,4 @@
-{% extends 'blog/navbase.html' %}
+{% extends 'blog/navbase_without.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
 <style>
@@ -11,13 +11,25 @@
       background-color: rgb(255, 204, 95);
       color: black;
   }
+  button.btn.btn-outline-info {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background: rgb(85, 85, 219);
+    width: 30%;
+    color: #fff;
+    margin-left: 35%;
+}
+button.btn.btn-outline-info:hover {
+    background: rgb(255, 204, 95);
+    color: #000;
+
+}
   </style>
     <article class="media content-section">
         <img  src="{{ post.author.profile.image.url }}">
         <div class="media-body">
             
-            <h2 class="article-title">{{ post.name }}</h2>
-            <h4>Patient's Info</h4>
+            <h2 style="text-align: center; color: darkblue; margin-top: 20px; font-weight: 700;" class="article-title">{{ post.name }}</h2>
 
             <h4>General Details</h4>
 
@@ -90,7 +102,7 @@
                     {{ form | crispy}}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Registed Covid Bed</button>
+                    <button class="btn btn-outline-info" type="submit">Approve/Disapprove Bed Request</button>
                 </div>
             </form>
                

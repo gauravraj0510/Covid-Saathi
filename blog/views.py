@@ -23,7 +23,6 @@ import requests
 import feedparser
 from pprint import pprint
 
-
 def mainHome(request):
     # objects = []
     # qty = []
@@ -225,8 +224,7 @@ def PatientDetailView(request, pk):
     else:
         form =Booking()
         rq = get_object_or_404(BedRequest, pk=pk)
-        print("=========================================",rq.email)
-        print("=========================================",rq.phone_number)
+
         return render(request,'blog/patient_detail.html', {
             "form": form,
             "post": rq,
@@ -428,6 +426,13 @@ class ChartData(APIView):
         }
         return Response(data)
 
+
+def searchf(input, word, count):
+    print(count)
+    if input == word:
+        count = count+1
+    return count
+
 def news(request):
     source =  requests.get('https://www.cnbctv18.com/healthcare/coronavirus-news-live-updates-india-mumbai-maharashtra-kerala-covid19-vaccine-lockdown-news-3-2-3-8804661.htm').text
     source2= requests.get('https://timesofindia.indiatimes.com/india/coronavirus-live-updates-april-3/liveblog/81302719.cms').text
@@ -435,10 +440,17 @@ def news(request):
     soup= BeautifulSoup(source3,'lxml')
     headline=[]
     body=[]
+    input = "Maharashtra"
+    count = 0
+    
     # headline= soup.find('div',class_='arti-right').text
     for article in soup.find_all('div',class_='heading-lvblg'):
-        # print(article.text)
+        
+        for word in article.text.split():
+            count = searchf(input, word, count)
         headline.append(article.text)
+
+    print(count, "=================================================") 
 
     for article in soup.find_all('div',class_='body-lvblg'):
         # print(article.text)
@@ -450,20 +462,16 @@ def news(request):
     context={
         # 'body':body,
         # 'headline':headline
-        'data':data,
-        'type':'Local'
+        'data':data
     }
-   
-
     return render(request,'blog/about.html',context)
-
-
 
 def Global(request):
     source3= requests.get('https://edition.cnn.com/world/live-news/coronavirus-pandemic-vaccine-updates-04-03-21/index.html?tab=all').text
     soup= BeautifulSoup(source3,'lxml')
     headline=[]
     body=[]
+    
     # headline= soup.find('div',class_='arti-right').text
     for article in soup.find_all('h2'):
         # print(article.text)
@@ -478,7 +486,6 @@ def Global(request):
     context={
         # 'body':body,
         # 'headline':headline
-        'data':data,
-        'type':'Global'
+        'data':data
     }
     return render(request,'blog/about.html',context)

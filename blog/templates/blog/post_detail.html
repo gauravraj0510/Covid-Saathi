@@ -9,12 +9,54 @@
     background-color: rgb(255, 204, 95);
     color: black;
   }
+  h2.article-title {
+    text-align: center;
+    font-weight: 800;
+    color: blue;
+}
+p.article-content {
+    font-weight: 700;
+    margin: 0;
+}
+img {
+    margin-bottom: 20px;
+}
+fieldset.form-group {
+    margin-top: 30px;
+    width: 70%;
+    margin-left: 15%;
+    background: rgb(177, 177, 248);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 10px 8px #888888;
+
+}
+button.btn.btn-outline-info {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background: rgb(85, 85, 219);
+    width: 30%;
+    color: #fff;
+    margin-left: 35%;
+}
+button.btn.btn-outline-info:hover {
+    background: rgb(255, 204, 95);
+    color: #000;
+}
+.img-container {
+    width: 620px;
+    margin: 0 auto;
+}
+p.article-content {
+    text-align: center;
+    font-size: 20px;
+}
 </style>
 <article class="media content-section">
   <img src="{{ post.author.profile.image.url }}" />
   <div class="media-body">
     <div class="article-metadata">
-      <a class="mr-2" href="#">{{ post.author }}</a>
+      <!-- <a style="text-align: center;" class="mr-2" href="#">{{ post.author }}</a> -->
       <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
       {% if post.author == user %}
       <div>
@@ -33,18 +75,23 @@
     </div>
     <h2 class="article-title">{{ post.name }}</h2>
     <!-- <h4>Donor's Info</h4> -->
-    <p class="article-content">{{ post.content }}</p>
 
+    <div class="img-container">
     <img src="{{ post.img1.url }}" style="width: 200px; height: 200px" />
     <img src="{{ post.img2.url }}" style="width: 200px; height: 200px" />
     <img src="{{ post.img3.url }}" style="width: 200px; height: 200px" />
+  </div>
+  
+  <p style="font-size: 15px; font-weight: 600; margin-bottom: 20px;" class="article-content">{{ post.content }}</p>
 
+
+    <div class="details">
     <p class="article-content">Type: {{ post.type }}</p>
     <p class="article-content">Covid Beds: {{ post.covid_cap }}</p>
     <p class="article-content">Normal Beds: {{ post.norm_cap }}</p>
     <p class="article-content">Area: {{ post.area }}</p>
     <p class="article-content">City: {{ post.city }}</p>
-
+  </div>
     {%if not user.is_authenticated %}
     <form method="POST">
       {% csrf_token %}
