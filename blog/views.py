@@ -69,7 +69,7 @@ def home(request):
             cats = form.cleaned_data.get('search')
             return redirect("home-search", cats)
     form = Search()
-    paginator = Paginator(posts, 8)
+    paginator = Paginator(posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
@@ -94,7 +94,7 @@ def home_search(request, cats):
     else:
         form = Search()
     posts  = search(posts, cats)
-    paginator = Paginator(posts, 10)
+    paginator = Paginator(posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
@@ -317,7 +317,7 @@ def FilteredCityView(request, cats):
             return redirect("home-search", cats)
     else:
         form = Search()
-    paginator = Paginator(category_posts, 10)
+    paginator = Paginator(category_posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
@@ -342,7 +342,7 @@ def FilteredAreaView(request, cats):
             return redirect("home-search", cats)
     else:
         form = Search()
-    paginator = Paginator(category_posts, 10)
+    paginator = Paginator(category_posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
@@ -366,7 +366,7 @@ def FilteredTypeView(request, cats):
             return redirect("home-search", cats)
     else:
         form = Search()
-    paginator = Paginator(category_posts, 10)
+    paginator = Paginator(category_posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
@@ -391,7 +391,7 @@ def cat_search_genre(request, cats, cat):
     else:
         form = Search()
     category_posts  = search(category_posts, cat)
-    paginator = Paginator(category_posts, 10)
+    paginator = Paginator(category_posts, 9)
     page = request.GET.get('page')
     try:
         post_list = paginator.page(page)
