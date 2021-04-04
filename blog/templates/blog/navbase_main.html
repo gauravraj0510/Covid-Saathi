@@ -1,0 +1,175 @@
+{% load static %} {% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      id="gs-sdk"
+      src="//www.buildquickbots.com/botwidget/v3/demo/static/js/sdk.js?v=3"
+      key="2de8d293-c16d-42e5-ab6e-28caf5b424e7"
+    ></script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          { pageLanguage: "en" },
+          "google_translate_element"
+        );
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+      <!-- Pogo Slider CSS -->
+      <link rel="stylesheet" href="../../static/blog/css/pogo-slider.min.css" />
+      <!-- Site CSS -->
+      <link rel="stylesheet" href="../../static/blog/css/style.css" />
+      <!-- Responsive CSS -->
+      <link rel="stylesheet" href="../../static/blog/css/responsive.css" />
+      <!-- Custom CSS -->
+      <link rel="stylesheet" href="../../static/blog/css/custom.css" />
+
+
+    <!-- ===== BOX ICONS ===== -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- ===== CSS ===== -->
+    <link rel="stylesheet" href="../../static/blog/css/nav.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+      integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
+      integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E="
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+    <title>CoVax</title>
+    <style>
+      select.goog-te-combo {
+        font-size: medium importa !important;
+        padding: 5px !important;
+        border: 2px solid blue !important;
+        border-radius: 50px !important;
+      }
+      
+    </style>
+  </head>
+  <body id="body-pd">
+    <header class="header" id="header">
+      <div class="header__toggle">
+        <i class="bx bx-menu" id="header-toggle"></i>
+      </div>
+      <div align="padding-left" id="google_translate_element"></div>
+      <!-- <div class="header__img">
+                <img src="../../static/blog/images/perfil.jpg" alt="">
+            </div> -->
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+      <nav class="nav">
+        <div>
+          <a href="/" class="nav__logo">
+            <i class='bx bx-world nav__logo-icon'></i>
+            <span class="nav__logo-name">CoVax</span>
+          </a>
+
+          <div class="nav__list">
+            <a href="{% url 'blog-home' %}" class="nav__link">
+              <i class='bx bx-list-ul nav__icon'></i>
+              <span class="nav__name">All Listings</span>
+            </a>
+            <a href="{% url 'blog-news' %}" class="nav__link">
+              <i class="bx bx-news nav__icon"></i>
+              <span class="nav__name">Local News</span>
+            </a>
+            <a href="{% url 'global-news' %}" class="nav__link">
+              <i class="bx bxs-news nav__icon"></i>
+              <span class="nav__name">Global News</span>
+            </a>
+            <a href="{% url 'blog-chart' %}" class="nav__link">
+              <i class="bx bx-bar-chart nav__icon"></i>
+              <span class="nav__name">Availability Charts</span>
+            </a>
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'dash-view' %}" class="nav__link">
+              <i class="bx bx-grid-alt nav__icon"></i>
+              <span class="nav__name">Dashboard</span>
+            </a>
+
+            <a href="{% url 'post-create' %}" class="nav__link">
+              <i class="bx bxs-home-circle nav__icon"></i>
+              <span class="nav__name">Hospital Profile</span>
+            </a>
+
+            <!-- <a href="#" class="nav__link">
+                      <i class="bx bx-bookmark nav__icon"></i>
+                      <span class="nav__name">Favorites</span>
+                    </a>
+        
+                    <a href="#" class="nav__link">
+                      <i class="bx bx-folder nav__icon"></i>
+                      <span class="nav__name">Data</span>
+                    </a>
+        
+                    <a href="#" class="nav__link">
+                      <i class="bx bx-bar-chart-alt-2 nav__icon"></i>
+                      <span class="nav__name">Analytics</span>
+                    </a> -->
+          </div>
+        </div>
+
+        <a href="{% url 'logout' %}" class="nav__link">
+          <i class="bx bx-log-out nav__icon"></i>
+          <span class="nav__name">Log Out</span>
+        </a>
+        {% else %}
+        <a href="{% url 'login' %}" class="nav__link">
+          <i class="bx bx-log-in nav__icon"></i>
+          <span class="nav__name">Log In</span>
+        </a>
+        <a href="{% url 'register' %}" class="nav__link">
+          <i class="bx bx-user-plus nav__icon"></i>
+          <span class="nav__name">Register</span>
+        </a>
+        {% endif %}
+      </nav>
+    </div>
+
+     {% block content %}{% endblock %}
+    <!--===== MAIN JS =====-->
+
+    <script src="../../static/blog/js/jquery.min.js"></script>
+      <script src="../../static/blog/js/popper.min.js"></script>
+      <script src="../../static/blog/js/bootstrap.min.js"></script>
+      <!-- ALL PLUGINS -->
+      <script src="../../static/blog/js/jquery.magnific-popup.min.js"></script>
+      <script src="../../static/blog/js/jquery.pogo-slider.min.js"></script>
+      <script src="../../static/blog/js/slider-index.js"></script>
+      <script src="../../static/blog/js/smoothscroll.js"></script>
+      <script src="../../static/blog/js/form-validator.min.js"></script>
+      <script src="../../static/blog/js/contact-form-script.js"></script>
+      <script src="../../static/blog/js/isotope.min.js"></script>
+      <script src="../../static/blog/js/images-loded.min.js"></script>
+      <script src="../../static/blog/js/custom.js"></script>
+
+    <script src="../../static/blog/js/nav.js"></script>
+    {% block jquery %}{% endblock %}
+  </body>
+</html>
