@@ -462,7 +462,8 @@ def news(request):
     context={
         # 'body':body,
         # 'headline':headline
-        'data':data
+        'data':data,
+        'type': 'Local'
     }
     return render(request,'blog/about.html',context)
 
@@ -486,6 +487,7 @@ def Global(request):
     context={
         # 'body':body,
         # 'headline':headline
-        'data':data
+        'data':data,
+        'type':"Global"
     }
     return render(request,'blog/about.html',context)
