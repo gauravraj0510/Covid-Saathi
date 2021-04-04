@@ -28,8 +28,8 @@ html{
 }
 body{
   position: relative;
-  margin: 0 0 0 0;
-  padding: 0 ;
+  margin: var(--header-height) 0 0 0;
+  padding: 0 1rem;
   font-family: var(--body-font);
   font-size: var(--normal-font-size);
   transition: .5s;
@@ -162,8 +162,8 @@ a{
 /* ===== MEDIA QUERIES=====*/
 @media screen and (min-width: 768px){
   body{
-    margin: 0 0 0 0;
-    padding-left: 0 + 2rem);
+    margin: calc(var(--header-height) + 1rem) 0 0 0;
+    padding-left: calc(var(--nav-width) + 2rem);
   }
 
   .header{
@@ -192,9 +192,6 @@ a{
 
   /*Add padding body desktop*/
   .body-pd{
-    padding-left: calc(var(--nav-width) + 156px);
+    padding-left: calc(var(--nav-width) + 188px);
   }
 }
-
-
-

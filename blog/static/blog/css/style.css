@@ -890,7 +890,7 @@ button#sidebarCollapse {
 }
 
 .slide_text {
-    margin-top: 280px;
+    margin-top: 90px;
     padding-left: 0;
 }
 
@@ -2995,6 +2995,8 @@ footer.footer-box .heading_main h2 {
     padding-bottom: 25px;
 }
 
-
+.section.about_section.layout_padding.padding_top_0 {
+    padding: 0;
+}
 
 
