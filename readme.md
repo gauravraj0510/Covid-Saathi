@@ -21,7 +21,7 @@ Our platform helps patients to keep themselves updated with the no of beds avail
  
 ## Main features 
 - Our Services 
-<img src='Examples/2.png' >
+<img src='Examples/11.png' >
 
 - Find Vaccination Centers 
 <img src='Examples/3.png' >
