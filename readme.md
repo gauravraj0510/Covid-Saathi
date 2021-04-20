@@ -5,18 +5,19 @@
 
 Our platform helps patients to keep themselves updated with the no of beds available in the hospitals near them in case of emergency. And also provides them their nearest vaccination centres by just entering their current location. They can also book beds in case of emergency for COVID patients.
 
-
-## Home Page
- - Class Diagram 
-<img src='Examples/1.png' width='500' >
-<img src='Examples/2.png' width='500' >
-
 ## Features 
  - Live Bed Availability at various hospitals
  - Book a bed if available
  - Locate nearby vaccination centers
  - Read Live COVID news both local and global news available 
- - Multi language and chat bot support  
+ - Multi language and chat bot support 
+
+
+## Home Page
+ - Home page design and look 
+<img src='Examples/1.png' width='500' >
+<img src='Examples/2.png' width='500' >
+ 
  
 ## Main features 
 - Our Services 
