@@ -15,35 +15,35 @@ Our platform helps patients to keep themselves updated with the no of beds avail
 
 ## Home Page
  - Home page design and look 
-<img src='Examples/1.png' width='500' >
-<img src='Examples/2.png' width='500' >
+<img src='Examples/1.png'  >
+<img src='Examples/2.png'  >
  
  
 ## Main features 
 - Our Services 
-<img src='Examples/2.png' width='500'>
+<img src='Examples/2.png' >
 
 - Find Vaccination Centers 
-<img src='Examples/3.png' width='500'>
+<img src='Examples/3.png' >
 
 - Hospitals with available number of beds
-<img src='Examples/4.png' width='500'>
+<img src='Examples/4.png' >
 
 - Available beds as Chart View 
-<img src='Examples/5.png' width='500'>
+<img src='Examples/5.png' >
 
 - Hospital Dashboard showing all bed requests
-<img src='Examples/6.png' width='500'>
+<img src='Examples/6.png' >
 
 - Multilanguage Support 
-<img src='Examples/7.png' width='500'>
+<img src='Examples/7.png' >
 
 - Chat Bot support 
-<img src='Examples/8.png' width='500'>
+<img src='Examples/8.png' >
 
 - Local COVID News 
-<img src='Examples/9.png' width='500'>
+<img src='Examples/9.png' >
 
 - Global COVID News 
-<img src='Examples/10.png' width='500'>
+<img src='Examples/10.png' >
 
