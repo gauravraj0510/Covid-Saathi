@@ -47,3 +47,10 @@ Our platform helps patients to keep themselves updated with the no of beds avail
 - Global COVID News 
 <img src='Examples/10.png' >
 
+
+## How to run project
+ - Star and clone this repo
+ - activate your virtualenv
+ - run: pip install -r requirements.txt in your shell
+ - run: python manage.py runserver in your shell
+
